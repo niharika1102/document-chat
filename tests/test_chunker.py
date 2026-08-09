@@ -1,13 +1,11 @@
 from app.ingestion.chunker import chunk_text
+from app.ingestion.loader import extract_text_from_pdf
 
-text = """
-Python is a high-level programming language.
-It is widely used for web development, automation,
-data analysis, artificial intelligence, and machine learning.
-FastAPI is a modern web framework for building APIs with Python.
-"""
+file_path = "data/docs/DBMS-BOSS-SHEET.pdf"
 
-chunk = chunk_text(text, chunk_size=10, overlap=2)
+text = extract_text_from_pdf(file_path)
+
+chunk = chunk_text(text, chunk_size = 500, overlap = 50)
 
 for i, chunk in enumerate(chunk):
-    print(f"Chunk {i + 1}: {chunk}")
+    print(f"Chunk {i + 1}: {chunk} \n")
