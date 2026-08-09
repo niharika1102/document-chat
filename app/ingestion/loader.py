@@ -1,6 +1,6 @@
 import pymupdf
 
-def extract_text_from_pdf(file_path: str) -> str:
+def extract_text_from_pdf(file_path: str) -> list[dict]:
     """Extracts text from a PDF
 
     Args:
@@ -12,11 +12,17 @@ def extract_text_from_pdf(file_path: str) -> str:
     
     document = pymupdf.open(file_path)
     
-    text = ""
+    pages = []
     
-    for page in document:
-        text += page.get_text()
+    for page_num, page in enumerate(document):
+        pages.append({
+            "text": page.get_text(),
+            "metadata": {
+                "source": file_path,
+                "page": page_num + 1
+            }
+        })
         
     document.close()
     
-    return text
+    return pages
