@@ -1,25 +1,33 @@
-def chunk_text(text: str, chunk_size: int = 500, overlap: int = 50) -> list[str]:
+def chunk_text(pages: list[dict], chunk_size: int = 500, overlap: int = 50) -> list[dict]:
     """Generate chunks from a text
     
     Args:
-        text (str): Takes the text as input
+        pages (list[dict]): Takes a list of page dictionaries as input
         chunk_size (int, optional): The size of each chunk. Defaults to 500.
         overlap (int, optional): The number of overlapping words between chunks. Defaults to 50.
 
     Returns:
-        list[str]: a list of text chunks
+        list[dict]: a list of chunk dictionaries
     """
     
-    words = text.split()
     chunks = []
-    start = 0
     
-    while start < len(words):
-        end = start + chunk_size
+    for page in pages:
+        words = page["text"].split()
+        start = 0
         
-        chunk = words[start:end]
-        chunks.append(" ".join(chunk))
-        
-        start += chunk_size - overlap
+        while start < len(words):
+            end = start + chunk_size
+            
+            chunk = words[start:end]
+            chunks.append({
+                "text": chunk,
+                "metadata": {
+                    "source": page["metadata"]["source"],
+                    "page": page["metadata"]["page"]
+                }
+            })
+            
+            start += chunk_size - overlap
         
     return chunks
