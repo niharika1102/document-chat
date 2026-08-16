@@ -26,3 +26,11 @@ def add_chunks(chunks: list[dict], embeddings: list[list[float]]):
         embeddings=embeddings,
         metadatas=metadatas,
     )
+    
+def retrieve_chunks(query_embedding: list[float], top_k: int = 3): 
+    results = collection.query(
+        query_embeddings=query_embedding,
+        n_results=top_k
+    )
+    
+    return results

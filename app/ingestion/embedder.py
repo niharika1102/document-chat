@@ -20,3 +20,8 @@ def generate_embeddings(chunks: list[dict]) -> list[list[float]]:
     embeddings = model.encode(texts)
     
     return embeddings.tolist()
+
+def generate_query_embedding(query: str) -> list[float]:
+    embedding = model.encode(query)
+    
+    return embedding.tolist()
