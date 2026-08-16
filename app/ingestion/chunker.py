@@ -19,7 +19,8 @@ def chunk_text(pages: list[dict], chunk_size: int = 500, overlap: int = 50) -> l
         while start < len(words):
             end = start + chunk_size
             
-            chunk = words[start:end]
+            chunk_words = words[start:end]
+            chunk = " ".join(chunk_words)
             chunks.append({
                 "text": chunk,
                 "metadata": {
